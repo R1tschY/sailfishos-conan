@@ -42,7 +42,8 @@ class KCoreAddonsConanFile(ConanFile):
         )
 
     def build(self):
-        cmake = CMake(self, generator="Ninja")
+        # Ninja has strange bug in Sailfish SDK i486 target
+        cmake = CMake(self, generator="Unix Makefiles")
         cmake.definitions["CMAKE_INSTALL_PREFIX"] = os.path.join(
             self.build_folder, "install"
         )
@@ -54,7 +55,7 @@ class KCoreAddonsConanFile(ConanFile):
         self.copy("*", dst="include", src="install/include/KF5/%s" % self.name)
         self.copy("*.a", dst="lib", src="install/lib", keep_path=False)
         self.copy("*.so", dst="lib", src="install/lib", keep_path=False)
-        self.copy("*.qm", dst="share/locale", src="install/share", keep_path=False)
+        self.copy("*.qm", dst="share/locale", src="install/share")
 
     def package_info(self):
         self.cpp_info.libs = [self.name.replace("K", "KF5", 1)]

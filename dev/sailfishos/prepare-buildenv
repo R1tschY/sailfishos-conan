@@ -1,0 +1,39 @@
+#!/bin/bash
+
+SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
+SDK=`$SCRIPT_DIR/get-sdk-install-folder`
+
+ssh \
+  mersdk@127.0.0.1 \
+  -p 2222 \
+  -i "$SDK/vmshare/ssh/private_keys/engine/mersdk" \
+  -o UserKnownHostsFile=/dev/null \
+  -o StrictHostKeyChecking=no \
+  << EOF
+set -ex
+
+for t in \$(sdk-assistant target list)
+do
+  VENV=\$HOME/.conan-venv-\$t
+  
+  sb2 -t \$t -m sdk-install -R zypper -qn in \
+    cmake ninja python2-devel extra-cmake-modules 'pkgconfig(Qt5Test)'
+
+  sb2 -t \$t -m sdk-build << EOI
+    # install virtualenv
+    if [ ! -f ~/.local/bin/virtualenv ]
+    then
+      curl -q https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+      python2 get-pip.py --user virtualenv
+      rm get-pip.py
+    fi
+
+    # create virtualenv and install conan
+    ~/.local/bin/virtualenv "\$VENV"
+    source "\$VENV/bin/activate"
+    pip install conan
+
+    conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
+EOI
+done
+EOF
