@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -ex
 
 SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
 ARCH=`gcc -dumpmachine | cut -d- -f1`
