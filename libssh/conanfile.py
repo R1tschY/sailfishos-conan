@@ -57,8 +57,8 @@ class LibSshConanFile(ConanFile):
             )
         )
         cmake.configure(source_folder=self.download_folder)
-        cmake.build()
-        self.run("cmake --build . --target install")
+        cmake.build(target="ssh_static")
+        cmake.build(target="install")
 
     def package(self):
         self.copy("*", dst="include", src="install/include")
