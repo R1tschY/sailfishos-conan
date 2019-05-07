@@ -1,10 +1,10 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
 
 for t in `sdk-assistant target list`
 do
-  sb2 -t $t -m sdk-build bash -ex << EOI
+  sb2 -t $t -m sdk-build bash -e << EOI
     ARCH=\$(gcc -dumpmachine | cut -d- -f1)
     VENV=\$(readlink -m "$SCRIPT_DIR/../.venv-\$ARCH")
 
@@ -14,11 +14,6 @@ do
     if [ -f "\$VENV/bin/activate" ] ; then
       source "\$VENV/bin/activate"
     fi
-
-    pwd
-    ls -al
-    ls -al $SCRIPT_DIR
-    ls -al $SCRIPT_DIR/commands
 
     $@
 EOI
