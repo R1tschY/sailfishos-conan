@@ -6,7 +6,7 @@ for t in `sdk-assistant target list`
 do
   sb2 -t $t -m sdk-build bash -e << EOI
     ARCH=\$(gcc -dumpmachine | cut -d- -f1)
-    VENV=\$(readlink -f "$SCRIPT_DIR/../../.venv-\$ARCH")
+    VENV=\$(readlink -f "$SCRIPT_DIR/../.venv-\$ARCH")
 
     echo
     echo "=== $t (\$ARCH) ==="
