@@ -16,6 +16,10 @@ do
       source "\$VENV/bin/activate"
     fi
 
+    pwd
+    ls -al $SCRIPT_DIR
+    ls -al $SCRIPT_DIR/commands
+
     $@
 EOI
 done
