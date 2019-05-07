@@ -14,17 +14,7 @@ ssh \
   -o StrictHostKeyChecking=no \
   << EOF
 set -e
+
 cd "$REMOTE_WD"
-
-for t in \$(sdk-assistant target list)
-do
-  VENV=\$HOME/.conan-venv-\$t
-  sb2 -t \$t -m sdk-build << EOI
-    set -e
-    source "\$VENV/bin/activate"
-    echo === \$t ===
-
-    conan create "$1" "$2" --profile="$REMOTE_SCRIPT_DIR/\$(echo \$t | cut -d- -f3)-profile"
-EOI
-done
+$REMOTE_SCRIPT_DIR/build-targets-inner $@
 EOF

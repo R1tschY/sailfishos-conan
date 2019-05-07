@@ -1,0 +1,21 @@
+#!/bin/bash -e
+
+SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
+
+for t in `sdk-assistant target list`
+do
+  sb2 -t $t -m sdk-build bash -e << EOI
+    ARCH=\$(gcc -dumpmachine | cut -d- -f1)
+    VENV=\$(readlink -f "$SCRIPT_DIR/../../.venv-\$ARCH")
+
+    echo
+    echo "=== $t (\$ARCH) ==="
+    
+    if [ -f "\$VENV/bin/activate" ]
+    then
+      source "\$VENV/bin/activate"
+    fi
+
+    $@
+EOI
+done

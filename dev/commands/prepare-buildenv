@@ -1,0 +1,28 @@
+#!/bin/bash -e
+
+SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
+ARCH=`gcc -dumpmachine | cut -d- -f1`
+VENV=`readlink -f "$SCRIPT_DIR/../../.venv-$ARCH"`
+
+# install virtualenv
+if [ ! -f ~/.local/bin/virtualenv ] ; then
+  echo "Install virtualenv ..."
+  pip3 install --no-warn-script-location --user virtualenv
+fi
+
+# create virtualenv and install conan
+if [ ! -d "$VENV" ] ; then
+  echo "Create conan venv @ $VENV ..."
+  ~/.local/bin/virtualenv --python=python3 "$VENV"
+fi
+
+if [ ! -f "$VENV/bin/conan" ] ; then
+  echo "Install conan ..."
+  source "$VENV/bin/activate"
+  pip install conan
+fi
+
+# speed up conan remote add
+if ! grep -sq sailfishos "$HOME/.conan/registry.json" ; then
+  conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
+fi
