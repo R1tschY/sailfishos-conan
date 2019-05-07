@@ -17,6 +17,7 @@ do
     fi
 
     pwd
+    ls -al
     ls -al $SCRIPT_DIR
     ls -al $SCRIPT_DIR/commands
 
