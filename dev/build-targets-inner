@@ -11,8 +11,7 @@ do
     echo
     echo "=== $t (\$ARCH) @ \$VENV ==="
     
-    if [ -f "\$VENV/bin/activate" ]
-    then
+    if [ -f "\$VENV/bin/activate" ] ; then
       source "\$VENV/bin/activate"
     fi
 
