@@ -1,5 +1,6 @@
 #!/bin/bash -e
 
 SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
+ARCH=`gcc -dumpmachine | cut -d- -f1`
 
-conan create "$1" "$2" --profile="$SCRIPT_DIR/../profiles/\$(uname -m)"
+conan create "$1" "$2" --profile="$SCRIPT_DIR/../profiles/$ARCH"
