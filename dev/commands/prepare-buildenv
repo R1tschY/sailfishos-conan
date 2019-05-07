@@ -2,7 +2,7 @@
 
 SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
 ARCH=`gcc -dumpmachine | cut -d- -f1`
-VENV=`readlink -f "$SCRIPT_DIR/../../.venv-$ARCH"`
+VENV=`readlink -m "$SCRIPT_DIR/../../.venv-$ARCH"`
 
 # install virtualenv
 if [ ! -f ~/.local/bin/virtualenv ] ; then
