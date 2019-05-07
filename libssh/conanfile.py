@@ -3,18 +3,19 @@ import os
 import textwrap
 
 
-class KF5ConanFileBase(ConanFile):
-    name = "KF5BuildBase"
-    version = "0.1"
+class LibSshConanFile(ConanFile):
+    name = "libssh"
+    version = "0.8.7"
 
-    license = "LGPLv2"
+    license = "LGPLv2.1"
+    homepage = "https://www.libssh.org/"
+    description = "The SSH library!"
+
     url = "https://github.com/R1tschY/sailfishos-conan"
+    author = "Richard Liebscher <richard.liebscher@gmail.com>"
 
     settings = "os", "arch", "compiler", "build_type"
     generators = "cmake"
-
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
 
     @property
     def download_folder(self):
@@ -25,11 +26,9 @@ class KF5ConanFileBase(ConanFile):
         return ".".join(self.version.split(".")[:2])
 
     def source(self):
-        zip_name = "%s.zip" % self.download_folder
-        url = "http://download.kde.org/stable/frameworks/%s/%s" % (
-            self.short_version,
-            zip_name,
-        )
+        # TODO: check signature
+        zip_name = "%s.tar.xz" % self.download_folder
+        url = "https://www.libssh.org/files/%s/%s" % (self.short_version, zip_name)
         self.output.info("Downloading %s ..." % url)
         tools.download(url, zip_name)
         tools.unzip(zip_name)
@@ -37,12 +36,13 @@ class KF5ConanFileBase(ConanFile):
 
         tools.replace_in_file(
             "%s/CMakeLists.txt" % self.download_folder,
-            "include(FeatureSummary)",
+            "set(APPLICATION_NAME ${PROJECT_NAME})",
             textwrap.dedent(
                 """
                 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
                 conan_basic_setup()
-                include(FeatureSummary)"""
+                set(APPLICATION_NAME ${PROJECT_NAME})
+                """
             ),
         )
 
@@ -51,15 +51,18 @@ class KF5ConanFileBase(ConanFile):
         cmake.definitions["CMAKE_INSTALL_PREFIX"] = os.path.join(
             self.build_folder, "install"
         )
+        cmake.definitions.update(
+            dict.fromkeys(
+                ["WITH_ZLIB", "WITH_SFTP", "WITH_SERVER", "WITH_STATIC_LIB"], True
+            )
+        )
         cmake.configure(source_folder=self.download_folder)
         cmake.build()
         self.run("cmake --build . --target install")
 
     def package(self):
-        self.copy("*", dst="include", src="install/include/KF5/%s" % self.name)
+        self.copy("*", dst="include", src="install/include/%s" % self.name)
         self.copy("*.a", dst="lib", src="install/lib", keep_path=False)
-        self.copy("*.so", dst="lib", src="install/lib", keep_path=False)
-        self.copy("*.qm", dst="share/locale", src="install/share", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = [self.name.replace("K", "KF5", 1)]
+        self.cpp_info.libs = ["ssh", "ssl", "crypto", "z"]
