@@ -9,7 +9,7 @@ before_script:
   - sudo sed -i 's%sbox_user_home_dir%"/builds"%' /usr/share/scratchbox2/modes/sdk-build/config.lua
 
   # Install python devel to compile python packages
-  - "dev/install-targets-inner zypper -qn in python3-devel"
+  - "dev/install-targets-inner zypper -qn in cmake ninja openssl-devel python3-devel"
   # Create conan venv
   - "dev/build-targets-inner dev/commands/prepare-buildenv"
 
