@@ -3,13 +3,13 @@ cache:
   paths:
     - .venv*/
 before_script:
-  - "dev/install-targets zypper -qn in python3-devel"
-  - "dev/build-targets dev/commands/prepare-buildenv"
+  - "dev/install-targets-inner zypper -qn in python3-devel"
+  - "dev/build-targets-inner dev/commands/prepare-buildenv"
 
 libssh:
   image: "coderus/sailfishos-platform-sdk:latest"
   script:
-    - "dev/build-targets dev/command/create-pkg libssh sailfishos/stable"
+    - "dev/build-targets-inner dev/command/create-pkg libssh sailfishos/stable"
   only:
     changes:
       - "libssh/**/*"
