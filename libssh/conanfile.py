@@ -47,7 +47,7 @@ class LibSshConanFile(ConanFile):
         )
 
     def build(self):
-        cmake = CMake(self, generator="Ninja")
+        cmake = CMake(self, generator="Unix Makefiles")
         cmake.definitions["CMAKE_INSTALL_PREFIX"] = os.path.join(
             self.build_folder, "install"
         )
