@@ -1,0 +1,15 @@
+# Global things
+cache:
+  paths:
+    - .venv*/
+before_script:
+  - "dev/install-targets zypper -qn in python3-devel"
+  - "dev/build-targets dev/commands/prepare-buildenv"
+
+libssh:
+  image: "coderus/sailfishos-platform-sdk:latest"
+  script:
+    - "dev/build-targets dev/command/create-pkg libssh sailfishos/stable"
+  only:
+    changes:
+      - "libssh/**/*"
