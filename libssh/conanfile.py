@@ -61,8 +61,9 @@ class LibSshConanFile(ConanFile):
         self.run("cmake --build . --target install")
 
     def package(self):
-        self.copy("*", dst="include", src="install/include/%s" % self.name)
+        self.copy("*", dst="include", src="install/include")
         self.copy("*.a", dst="lib", src="install/lib", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = ["ssh", "ssl", "crypto", "z"]
+        self.cpp_info.defines = ["LIBSSH_STATIC=1", "WITH_SERVER"]
