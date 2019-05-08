@@ -2,6 +2,10 @@
 cache:
   paths:
     - .venv*/
+variables:
+  CONAN_CHANNEL: stable
+  CONAN_LOGIN_USERNAME: r1tschy
+  CONAN_UPLOAD: https://api.bintray.com/conan/r1tschy/sailfishos
 before_script:
   # route /builds to sb2
   - echo 'use_outside_path("/builds")' > $HOME/.sbrules

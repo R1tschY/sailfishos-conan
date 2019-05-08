@@ -4,4 +4,4 @@ SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
 ARCH=`gcc -dumpmachine | cut -d- -f1`
 
 conan user -r sailfishos
-conan upload --all '*' -r sailfishos
+conan upload --all '*' -r sailfishos --confirm --check
