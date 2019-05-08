@@ -1,7 +1,8 @@
 # Global things
 cache:
+  key: "$ARCH"
   paths:
-    - .venv*/
+    - .venv-$ARCH/
 variables:
   CONAN_CHANNEL: stable
   CONAN_LOGIN_USERNAME: r1tschy
@@ -13,18 +14,28 @@ before_script:
   - sudo sed -i 's%sbox_user_home_dir%"/builds", exec_policy_name = "Target"},{dir = sbox_user_home_dir%' /usr/share/scratchbox2/modes/sdk-build/config.lua
 
   # Install python devel to compile python packages
-  - "dev/install-targets-inner zypper -qn in cmake openssl-devel python3-devel"
+  - "dev/installenv $ARCH zypper -qn in cmake openssl-devel python3-devel"
   # Create conan venv
-  - "dev/build-targets-inner dev/commands/prepare-buildenv"
+  - "dev/buildenv $ARCH dev/commands/prepare-buildenv"
 
-libssh:
+libssh armv7hl:
   image: "coderus/sailfishos-platform-sdk:latest"
+  variables:
+    ARCH: "armv7hl"
   script:
     - cd libssh
-    - "../dev/buildenv armv7hl python ci_build.py"
-    - "../dev/buildenv i486 python ci_build.py"
+    - "../dev/buildenv $ARCH python ci_build.py"
   only:
     changes:
       - "libssh/**/*"
-      - ".gitlab-ci.yml"
-      - "dev/**/*"
+
+libssh i486:
+  image: "coderus/sailfishos-platform-sdk:latest"
+  variables:
+    ARCH: "i486"
+  script:
+    - cd libssh
+    - "../dev/buildenv $ARCH python ci_build.py"
+  only:
+    changes:
+      - "libssh/**/*"

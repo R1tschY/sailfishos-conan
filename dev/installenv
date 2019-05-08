@@ -18,11 +18,4 @@ if [ ${#TARGETS[@]} -ne 1 ] ; then
   exit 2
 fi
 
-TARGET=${TARGETS[0]}
-sb2 -t $TARGET -m sdk-build bash -e << EOI
-  if [ -f "$VENV/bin/activate" ] ; then
-    source "$VENV/bin/activate"
-  fi
-
-  $@
-EOI
+sb2 -t ${TARGETS[0]} -m sdk-install -R $@
