@@ -24,8 +24,7 @@ libssh armv7hl:
   variables:
     ARCH: "armv7hl"
   script:
-    - cd libssh
-    - "../dev/buildenv $ARCH python ci_build.py"
+    - "dev/buildenv $ARCH python ci_build.py libssh"
   only:
     changes:
       - "libssh/**/*"
@@ -35,8 +34,27 @@ libssh i486:
   variables:
     ARCH: "i486"
   script:
-    - cd libssh
-    - "../dev/buildenv $ARCH python ci_build.py"
+    - "dev/buildenv $ARCH python ci_build.py libssh"
   only:
     changes:
       - "libssh/**/*"
+
+KCoreAddons armv7hl:
+  image: "coderus/sailfishos-platform-sdk:latest"
+  variables:
+    ARCH: "armv7hl"
+  script:
+    - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
+  only:
+    changes:
+      - "kcoreaddons/**/*"
+
+KCoreAddons i486:
+  image: "coderus/sailfishos-platform-sdk:latest"
+  variables:
+    ARCH: "i486"
+  script:
+    - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
+  only:
+    changes:
+      - "kcoreaddons/**/*"
