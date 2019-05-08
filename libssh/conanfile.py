@@ -39,7 +39,6 @@ class LibSshConanFile(ConanFile):
         return ".".join(self.version.split(".")[:2])
 
     def source(self):
-        # TODO: check signature
         zip_name = "%s.tar.xz" % self.download_folder
         url = "https://www.libssh.org/files/%s/%s" % (self.short_version, zip_name)
         self.output.info("Downloading %s ..." % url)
