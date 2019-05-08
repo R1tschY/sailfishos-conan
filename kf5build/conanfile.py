@@ -3,63 +3,68 @@ import os
 import textwrap
 
 
-class KF5ConanFileBase(ConanFile):
+class KF5BuildBaseConanFile(ConanFile):
     name = "KF5BuildBase"
-    version = "0.1"
+    version = "0.1.1"
 
-    license = "LGPLv2"
-    url = "https://github.com/R1tschY/sailfishos-conan"
 
-    settings = "os", "arch", "compiler", "build_type"
-    generators = "cmake"
+def get_conanfile():
+    class KF5ConanFileBase(ConanFile):
+        license = "LGPLv2"
+        url = "https://github.com/R1tschY/sailfishos-conan"
 
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
+        settings = "os", "arch", "compiler", "build_type"
+        generators = "cmake"
 
-    @property
-    def download_folder(self):
-        return "%s-%s" % (self.name.lower(), self.version)
+        options = {"shared": [True, False]}
+        default_options = "shared=False"
 
-    @property
-    def short_version(self):
-        return ".".join(self.version.split(".")[:2])
+        @property
+        def download_folder(self):
+            return "%s-%s" % (self.name.lower(), self.version)
 
-    def source(self):
-        zip_name = "%s.zip" % self.download_folder
-        url = "http://download.kde.org/stable/frameworks/%s/%s" % (
-            self.short_version,
-            zip_name,
-        )
-        self.output.info("Downloading %s ..." % url)
-        tools.download(url, zip_name)
-        tools.unzip(zip_name)
-        os.unlink(zip_name)
+        @property
+        def short_version(self):
+            return ".".join(self.version.split(".")[:2])
 
-        tools.replace_in_file(
-            "%s/CMakeLists.txt" % self.download_folder,
-            "include(FeatureSummary)",
-            textwrap.dedent(
-                """
-                include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-                conan_basic_setup()
-                include(FeatureSummary)"""
-            ),
-        )
+        def source(self):
+            zip_name = "%s.zip" % self.download_folder
+            url = "http://download.kde.org/stable/frameworks/%s/%s" % (
+                self.short_version,
+                zip_name,
+            )
+            self.output.info("Downloading %s ..." % url)
+            tools.download(url, zip_name)
+            tools.unzip(zip_name)
+            os.unlink(zip_name)
 
-    def build(self):
-        cmake = CMake(self, generator="Unix Makefiles")
-        cmake.definitions["CMAKE_INSTALL_PREFIX"] = os.path.join(
-            self.build_folder, "install"
-        )
-        cmake.configure(source_folder=self.download_folder)
-        cmake.build()
-        self.run("cmake --build . --target install")
+            tools.replace_in_file(
+                "%s/CMakeLists.txt" % self.download_folder,
+                "include(FeatureSummary)",
+                textwrap.dedent(
+                    """
+                    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+                    conan_basic_setup()
+                    include(FeatureSummary)"""
+                ),
+            )
 
-    def package(self):
-        self.copy("*", dst="include", src="install/include/KF5/%s" % self.name)
-        self.copy("*.a", dst="lib", src="install/lib", keep_path=False)
-        self.copy("*.so", dst="lib", src="install/lib", keep_path=False)
-        self.copy("*.qm", dst="share/locale", src="install/share", keep_path=False)
+        def build(self):
+            cmake = CMake(self, generator="Unix Makefiles")
+            cmake.definitions["CMAKE_INSTALL_PREFIX"] = os.path.join(
+                self.build_folder, "install"
+            )
+            cmake.configure(source_folder=self.download_folder)
+            cmake.build()
+            cmake.build(target="install")
 
-    def package_info(self):
-        self.cpp_info.libs = [self.name.replace("K", "KF5", 1)]
+        def package(self):
+            self.copy("*", dst="include", src="install/include/KF5/%s" % self.name)
+            self.copy("*.a", dst="lib", src="install/lib", keep_path=False)
+            self.copy("*.so", dst="lib", src="install/lib", keep_path=False)
+            self.copy("*.qm", dst="share/locale", src="install/share", keep_path=False)
+
+        def package_info(self):
+            self.cpp_info.libs = [self.name.replace("K", "KF5", 1)]
+
+    return KF5ConanFileBase
