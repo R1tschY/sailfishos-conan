@@ -3,10 +3,10 @@ import subprocess
 
 
 if __name__ == "__main__":
-    machine = subprocess.check_output("uname -m", shell=True)
-    if not machine:
+    arch = subprocess.check_output("uname -m", shell=True)
+    if not arch:
         raise LookupError("Failed to get gcc compile arch")
-    arch, _ = machine.decode("utf-8").split("-", 1)
+    arch = arch.decode("utf-8")
 
     builder = ConanMultiPackager()
     builder.add(
