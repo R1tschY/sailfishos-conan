@@ -1,7 +1,0 @@
-#!/bin/bash -e
-
-SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
-ARCH=`gcc -dumpmachine | cut -d- -f1`
-VENV=`readlink -m "$SCRIPT_DIR/../../.venv-$ARCH"`
-
-rm -rf "$VENV"

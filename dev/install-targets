@@ -16,5 +16,14 @@ ssh \
 set -e
 
 cd "$REMOTE_WD"
-$REMOTE_SCRIPT_DIR/install-targets-inner $@
+
+for t in `sdk-assistant target list`
+do
+  echo 
+  echo "=== \$t ==="
+  echo 
+
+  "$SCRIPT_DIR/installenv" \$t
+EOI
+done
 EOF

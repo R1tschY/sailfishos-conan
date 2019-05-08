@@ -16,5 +16,13 @@ ssh \
 set -e
 
 cd "$REMOTE_WD"
-$REMOTE_SCRIPT_DIR/build-targets-inner $@
+
+for t in `sdk-assistant target list`
+do
+  echo 
+  echo "=== \$t ==="
+  echo 
+  
+  "$SCRIPT_DIR/buildenv" \$t $@
+done
 EOF
