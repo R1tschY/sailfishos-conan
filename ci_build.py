@@ -18,7 +18,11 @@ if __name__ == "__main__":
 
     os.chdir(args.path)
 
-    builder = ConanMultiPackager()
+    builder = ConanMultiPackager(
+        remotes=[
+            ("https://api.bintray.com/conan/r1tschy/sailfishos", True, "sailfishos")
+        ]
+    )
     builder.add(
         settings={
             "arch": conan_arch,
