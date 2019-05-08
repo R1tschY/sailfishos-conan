@@ -6,6 +6,7 @@ cache:
 variables:
   CONAN_CHANNEL: stable
   CONAN_LOGIN_USERNAME: r1tschy
+  CONAN_USERNAME: r1tschy
   CONAN_UPLOAD: https://api.bintray.com/conan/r1tschy/sailfishos
 before_script:
   # route /builds to sb2
