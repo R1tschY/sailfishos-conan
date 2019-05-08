@@ -1,7 +1,7 @@
 from cpt.packager import ConanMultiPackager
 import subprocess
 import argparse
-
+import os
 
 CONAN_ARCH = {"i486": "x86", "armv7l": "armv7", "armv7hl": "armv7"}
 
@@ -16,7 +16,9 @@ if __name__ == "__main__":
         raise LookupError("Failed to get gcc compile arch")
     conan_arch = CONAN_ARCH.get(arch, arch)
 
-    builder = ConanMultiPackager(cwd=args.path)
+    os.chdir(args.path)
+
+    builder = ConanMultiPackager()
     builder.add(
         settings={
             "arch": conan_arch,
