@@ -1,6 +1,19 @@
 from conans import ConanFile, tools, CMake
 import os
 import textwrap
+import re
+
+
+def sub_in_file(filename, pattern, repl, flags=0):
+    with open(filename, "r", encoding="utf-8") as fp:
+        content = fp.read()
+
+    content, n = re.subn(pattern, repl, content, flags=flags)
+    if n == 0:
+        raise LookupError("pattern not found in file %s" % filename)
+
+    with open(filename, "w", encoding="utf-8") as fp:
+        fp.write(content)
 
 
 class LibSshConanFile(ConanFile):
@@ -34,16 +47,27 @@ class LibSshConanFile(ConanFile):
         tools.unzip(zip_name)
         os.unlink(zip_name)
 
-        tools.replace_in_file(
+        sub_in_file(
             "%s/CMakeLists.txt" % self.download_folder,
-            "set(APPLICATION_NAME ${PROJECT_NAME})",
+            r"(project\(libssh [^)]+\))",
             textwrap.dedent(
-                """
+                r"""
+                \1
+
+                # Conan
                 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
                 conan_basic_setup()
-                set(APPLICATION_NAME ${PROJECT_NAME})
+                
+                # Do not build shared lib
+                set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY true)
                 """
             ),
+        )
+        # Do not install shared lib
+        sub_in_file(
+            "%s/src/CMakeLists.txt" % self.download_folder,
+            r"(install\(\s*TARGETS\s*\$\{LIBSSH_SHARED_LIBRARY\})",
+            r"\1 OPTIONAL ",
         )
 
     def build(self):
