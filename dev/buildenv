@@ -11,7 +11,7 @@ ARCH="$1"
 shift
 
 VENV=`readlink -m "$SCRIPT_DIR/../.venv-$ARCH"`
-TARGETS=(`sdk-assistant target list | grep $1`)
+TARGETS=(`sdk-assistant target list | grep $ARCH`)
 
 if [ ${#TARGETS[@]} -ne 1 ] ; then
   echo "No or more than one target found:" ${TARGETS[@]}
