@@ -20,8 +20,11 @@ before_script:
 libssh:
   image: "coderus/sailfishos-platform-sdk:latest"
   script:
-    - "dev/build-targets-inner dev/commands/create-pkg libssh sailfishos/stable"
-    - "dev/build-targets-inner dev/commands/upload-pkg"
+    - cd libssh
+    - "../dev/buildenv armv7hl python ci_build.py"
+    - "../dev/buildenv i486 python ci_build.py"
   only:
     changes:
       - "libssh/**/*"
+      - ".gitlab-ci.yml"
+      - "dev/**/*"

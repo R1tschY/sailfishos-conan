@@ -19,7 +19,7 @@ fi
 if [ ! -f "$VENV/bin/conan" ] ; then
   echo "Install conan ..."
   source "$VENV/bin/activate"
-  pip install conan
+  pip install conan conan_package_tools
 fi
 
 # speed up conan remote add

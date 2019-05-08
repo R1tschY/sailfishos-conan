@@ -1,0 +1,31 @@
+#!/bin/bash -e
+
+SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
+
+if [ $# -lt 2 ] ; then
+	echo "Usage $0 ARCH CMD"
+	exit 1
+fi
+
+ARCH="$1"
+shift
+
+VENV=`readlink -m "$SCRIPT_DIR/../.venv-$ARCH"`
+TARGETS=(`sdk-assistant target list | grep $1`)
+
+if [ ${#TARGETS[@]} -ne 1 ] ; then
+  echo "No or more than one target found:" ${TARGETS[@]}
+  exit 2
+fi
+
+TARGET=${TARGETS[0]}
+sb2 -t $TARGET -m sdk-build bash -e << EOI
+  echo
+  echo "=== $TARGET ($ARCH) ==="
+  
+  if [ -f "$VENV/bin/activate" ] ; then
+    source "$VENV/bin/activate"
+  fi
+
+  $@
+EOI
