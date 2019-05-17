@@ -1,0 +1,11 @@
+#!/bin/bash -e
+set +x
+
+# build
+conan create "$1" "$CONAN_USERNAME/$CONAN_CHANNEL"
+
+# upload
+conan user -r sailfishos -p "$CONAN_PASSWORD" "$CONAN_LOGIN_USERNAME"
+conan upload -r sailfishos --all --confirm '*'
+conan user -c
+

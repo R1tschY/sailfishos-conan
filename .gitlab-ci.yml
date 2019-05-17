@@ -44,8 +44,7 @@ KCoreAddons armv7hl:
   variables:
     ARCH: "armv7hl"
   script:
-    - "dev/buildenv $ARCH conan download KF5BuildBase/0.1.1@r1tschy/stable -r sailfishos"
-    - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
+    - "dev/buildenv $ARCH dev/commands/ci kcoreaddons"
   only:
     changes:
       - "kcoreaddons/**/*"
@@ -55,8 +54,7 @@ KCoreAddons i486:
   variables:
     ARCH: "i486"
   script:
-    - "dev/buildenv $ARCH conan download KF5BuildBase/0.1.1@r1tschy/stable -r sailfishos"
-    - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
+    - "dev/buildenv $ARCH dev/commands/ci kcoreaddons"
   only:
     changes:
       - "kcoreaddons/**/*"

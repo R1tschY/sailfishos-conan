@@ -24,13 +24,6 @@ if __name__ == "__main__":
         ]
     )
     builder.add(
-        settings={
-            "arch": conan_arch,
-            "arch_build": conan_arch,
-            "build_type": "Release",
-        },
-        options={},
-        env_vars={},
-        build_requires={},
+        settings={"arch": conan_arch, "arch_build": conan_arch, "build_type": "Release"}
     )
     builder.run()
