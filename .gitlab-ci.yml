@@ -44,7 +44,7 @@ KCoreAddons armv7hl:
   variables:
     ARCH: "armv7hl"
   script:
-    - "dev/buildenv $ARCH dev/commands/ci kcoreaddons"
+    - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
   only:
     changes:
       - "kcoreaddons/**/*"
@@ -54,7 +54,7 @@ KCoreAddons i486:
   variables:
     ARCH: "i486"
   script:
-    - "dev/buildenv $ARCH dev/commands/ci kcoreaddons"
+    - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
   only:
     changes:
       - "kcoreaddons/**/*"
