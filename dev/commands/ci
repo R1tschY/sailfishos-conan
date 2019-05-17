@@ -1,8 +1,11 @@
 #!/bin/bash -e
 set +x
 
+SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
+ARCH=`gcc -dumpmachine | cut -d- -f1`
+
 # build
-conan create "$1" "$CONAN_USERNAME/$CONAN_CHANNEL"
+conan create --profile=$SCRIPT_DIR/../profiles/$ARCH "$1" "$CONAN_USERNAME/$CONAN_CHANNEL"
 
 # upload
 conan user -r sailfishos -p "$CONAN_PASSWORD" "$CONAN_LOGIN_USERNAME"
