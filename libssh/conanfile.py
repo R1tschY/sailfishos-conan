@@ -75,9 +75,15 @@ class LibSshConanFile(ConanFile):
             self.build_folder, "install"
         )
         cmake.definitions.update(
-            dict.fromkeys(
-                ["WITH_ZLIB", "WITH_SFTP", "WITH_SERVER", "WITH_STATIC_LIB"], True
-            )
+            {
+                "WITH_ZLIB": True,
+                "WITH_SFTP": True,
+                "WITH_SERVER": True,
+                "WITH_STATIC_LIB": True,
+                "BUILD_EXAMPLES": False,
+                "BUILD_TESTING": False,
+                "BUILD_SHARED_LIBS": False,
+            }
         )
         cmake.configure(source_folder=self.download_folder)
         cmake.build(target="ssh_static")

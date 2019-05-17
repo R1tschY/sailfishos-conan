@@ -7,7 +7,7 @@ variables:
   CONAN_CHANNEL: stable
   CONAN_LOGIN_USERNAME: r1tschy
   CONAN_USERNAME: r1tschy
-  CONAN_UPLOAD: https://api.bintray.com/conan/r1tschy/sailfishos
+  CONAN_UPLOAD: https://api.bintray.com/conan/r1tschy/sailfishos@1@sailfishos
 before_script:
   # route /builds to sb2
   - echo 'use_outside_path("/builds")' > $HOME/.sbrules
@@ -44,6 +44,7 @@ KCoreAddons armv7hl:
   variables:
     ARCH: "armv7hl"
   script:
+    - "dev/buildenv $ARCH conan download KF5BuildBase/0.1.1@r1tschy/stable -r sailfishos"
     - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
   only:
     changes:
@@ -54,6 +55,7 @@ KCoreAddons i486:
   variables:
     ARCH: "i486"
   script:
+    - "dev/buildenv $ARCH conan download KF5BuildBase/0.1.1@r1tschy/stable -r sailfishos"
     - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
   only:
     changes:
