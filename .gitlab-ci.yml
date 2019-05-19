@@ -15,7 +15,7 @@ before_script:
   - sudo sed -i 's%sbox_user_home_dir%"/builds", exec_policy_name = "Target"},{dir = sbox_user_home_dir%' /usr/share/scratchbox2/modes/sdk-build/config.lua
 
   # Install python devel to compile python packages
-  - "dev/installenv $ARCH zypper -qn in cmake openssl-devel python3-devel extra-cmake-modules 'pkgconfig(Qt5Test)'"
+  - "dev/installenv $ARCH zypper -qn in cmake openssl-devel python3-devel extra-cmake-modules 'pkgconfig(Qt5Test)' 'pkgconfig(Qt5Script)'"
   # Create conan venv
   - "dev/buildenv $ARCH dev/commands/prepare-buildenv"
 
