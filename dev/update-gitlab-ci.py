@@ -5,12 +5,22 @@ import sys
 import textwrap
 
 MAGIC = "\n# -- JOBS --\n"
-JOBS = ["kcoreaddons", "ki18n", "libssh"]
+JOBS = {
+    "kcoreaddons": ["extra-cmake-modules", "pkgconfig(Qt5Test)"],
+    "ki18n": [
+        "extra-cmake-modules",
+        "pkgconfig(Qt5Test)",
+        "pkgconfig(Qt5Script)",
+        "gettext-devel",
+    ],
+    "libssh": ["pkgconfig(openssl)"],
+}
 TEMPLATE = """
 {name} armv7hl:
   image: "coderus/sailfishos-platform-sdk:latest"
   variables:
     ARCH: "armv7hl"
+    EXTRA_DEPS: "{requirements}"
   script:
     - "dev/buildenv $ARCH python ci_build.py {name}"
   only:
@@ -21,6 +31,7 @@ TEMPLATE = """
   image: "coderus/sailfishos-platform-sdk:latest"
   variables:
     ARCH: "i486"
+    EXTRA_DEPS: "{requirements}"
   script:
     - "dev/buildenv $ARCH python ci_build.py {name}"
   only:
@@ -28,6 +39,10 @@ TEMPLATE = """
       - "{name}/**/*"
 
 """
+
+
+def format_requirements(req):
+    return " ".join(f"'{r}'" for r in req)
 
 
 def main():
@@ -45,7 +60,12 @@ def main():
     content = content[: start + len(MAGIC)]
 
     template = textwrap.dedent(TEMPLATE.strip())
-    jobs = "\n\n".join([template.format(name=job) for job in JOBS])
+    jobs = "\n\n".join(
+        [
+            template.format(name=name, requirements=" ".join(f"'{r}'" for r in reqs))
+            for name, reqs in JOBS.items()
+        ]
+    )
 
     with open(gitlab_ci_path, "w", encoding="utf-8") as fp:
         fp.write(content + jobs)
