@@ -62,7 +62,7 @@ def main():
     template = textwrap.dedent(TEMPLATE.strip())
     jobs = "\n\n".join(
         [
-            template.format(name=name, requirements=" ".join(f"'{r}'" for r in reqs))
+            template.format(name=name, requirements=" ".join(f"{r}" for r in reqs))
             for name, reqs in JOBS.items()
         ]
     )
