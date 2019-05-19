@@ -19,6 +19,47 @@ before_script:
   # Create conan venv
   - "dev/buildenv $ARCH dev/commands/prepare-buildenv"
 
+# -- JOBS --
+kcoreaddons armv7hl:
+  image: "coderus/sailfishos-platform-sdk:latest"
+  variables:
+    ARCH: "armv7hl"
+  script:
+    - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
+  only:
+    changes:
+      - "kcoreaddons/**/*"
+
+kcoreaddons i486:
+  image: "coderus/sailfishos-platform-sdk:latest"
+  variables:
+    ARCH: "i486"
+  script:
+    - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
+  only:
+    changes:
+      - "kcoreaddons/**/*"
+
+ki18n armv7hl:
+  image: "coderus/sailfishos-platform-sdk:latest"
+  variables:
+    ARCH: "armv7hl"
+  script:
+    - "dev/buildenv $ARCH python ci_build.py ki18n"
+  only:
+    changes:
+      - "ki18n/**/*"
+
+ki18n i486:
+  image: "coderus/sailfishos-platform-sdk:latest"
+  variables:
+    ARCH: "i486"
+  script:
+    - "dev/buildenv $ARCH python ci_build.py ki18n"
+  only:
+    changes:
+      - "ki18n/**/*"
+
 libssh armv7hl:
   image: "coderus/sailfishos-platform-sdk:latest"
   variables:
@@ -38,23 +79,3 @@ libssh i486:
   only:
     changes:
       - "libssh/**/*"
-
-KCoreAddons armv7hl:
-  image: "coderus/sailfishos-platform-sdk:latest"
-  variables:
-    ARCH: "armv7hl"
-  script:
-    - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
-  only:
-    changes:
-      - "kcoreaddons/**/*"
-
-KCoreAddons i486:
-  image: "coderus/sailfishos-platform-sdk:latest"
-  variables:
-    ARCH: "i486"
-  script:
-    - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
-  only:
-    changes:
-      - "kcoreaddons/**/*"
