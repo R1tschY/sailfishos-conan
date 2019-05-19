@@ -5,12 +5,13 @@ import textwrap
 
 class KF5BuildBaseConanFile(ConanFile):
     name = "KF5BuildBase"
-    version = "0.1.1"
+    version = "0.1.2"
 
 
 def get_conanfile():
     class KF5ConanFileBase(ConanFile):
-        license = "LGPLv2"
+        license = "LGPLv2.1+"
+        homepage = "https://kde.org/products/frameworks/"
         url = "https://github.com/R1tschY/sailfishos-conan"
 
         settings = "os", "arch", "compiler", "build_type"
@@ -51,8 +52,11 @@ def get_conanfile():
 
         def build(self):
             cmake = CMake(self, generator="Unix Makefiles")
-            cmake.definitions["CMAKE_INSTALL_PREFIX"] = os.path.join(
-                self.build_folder, "install"
+            cmake.definitions.update(
+                {
+                    "CMAKE_INSTALL_PREFIX": os.path.join(self.build_folder, "install"),
+                    "BUILD_QCH": "OFF",
+                }
             )
             cmake.configure(source_folder=self.download_folder)
             cmake.build()
