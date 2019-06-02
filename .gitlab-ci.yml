@@ -21,7 +21,7 @@ before_script:
 
 # -- JOBS --
 kcoreaddons armv7hl:
-  image: "coderus/sailfishos-platform-sdk:latest"
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
     EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test)"
@@ -32,7 +32,7 @@ kcoreaddons armv7hl:
       - "kcoreaddons/**/*"
 
 kcoreaddons i486:
-  image: "coderus/sailfishos-platform-sdk:latest"
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
     EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test)"
@@ -43,7 +43,7 @@ kcoreaddons i486:
       - "kcoreaddons/**/*"
 
 ki18n armv7hl:
-  image: "coderus/sailfishos-platform-sdk:latest"
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
     EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test) pkgconfig(Qt5Script) gettext-devel"
@@ -54,7 +54,7 @@ ki18n armv7hl:
       - "ki18n/**/*"
 
 ki18n i486:
-  image: "coderus/sailfishos-platform-sdk:latest"
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
     EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test) pkgconfig(Qt5Script) gettext-devel"
@@ -65,7 +65,7 @@ ki18n i486:
       - "ki18n/**/*"
 
 libssh armv7hl:
-  image: "coderus/sailfishos-platform-sdk:latest"
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
     EXTRA_DEPS: "pkgconfig(openssl)"
@@ -76,7 +76,7 @@ libssh armv7hl:
       - "libssh/**/*"
 
 libssh i486:
-  image: "coderus/sailfishos-platform-sdk:latest"
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
     EXTRA_DEPS: "pkgconfig(openssl)"

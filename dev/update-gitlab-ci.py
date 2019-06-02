@@ -17,7 +17,7 @@ JOBS = {
 }
 TEMPLATE = """
 {name} armv7hl:
-  image: "coderus/sailfishos-platform-sdk:latest"
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
     EXTRA_DEPS: "{requirements}"
@@ -28,7 +28,7 @@ TEMPLATE = """
       - "{name}/**/*"
 
 {name} i486:
-  image: "coderus/sailfishos-platform-sdk:latest"
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
     EXTRA_DEPS: "{requirements}"
