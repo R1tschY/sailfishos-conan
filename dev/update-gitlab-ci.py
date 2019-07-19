@@ -14,6 +14,7 @@ JOBS = {
         "gettext-devel",
     ],
     "libssh": ["pkgconfig(openssl)"],
+    "kconfig": ["extra-cmake-modules", "pkgconfig(Qt5Test)"],
 }
 TEMPLATE = """
 {name} armv7hl:

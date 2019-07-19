@@ -85,3 +85,25 @@ libssh i486:
   only:
     changes:
       - "libssh/**/*"
+
+kconfig armv7hl:
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
+  variables:
+    ARCH: "armv7hl"
+    EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test)"
+  script:
+    - "dev/buildenv $ARCH python ci_build.py kconfig"
+  only:
+    changes:
+      - "kconfig/**/*"
+
+kconfig i486:
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
+  variables:
+    ARCH: "i486"
+    EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test)"
+  script:
+    - "dev/buildenv $ARCH python ci_build.py kconfig"
+  only:
+    changes:
+      - "kconfig/**/*"

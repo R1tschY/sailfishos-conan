@@ -4,3 +4,7 @@ build
 .idea
 .vscode
 .venv*
+
+conanbuildinfo.*
+conaninfo.*
+graph_info.json
