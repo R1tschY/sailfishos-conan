@@ -15,7 +15,7 @@ JOBS = {
     ],
     "libssh": ["pkgconfig(openssl)"],
     "kconfig": ["extra-cmake-modules", "pkgconfig(Qt5Test)"],
-    "qca": ["pkgconfig(Qt5Core)", "pkgconfig(openssl)"],
+    "qca": ["git", "pkgconfig(Qt5Core)", "pkgconfig(openssl)"],
 }
 TEMPLATE = """
 {name} armv7hl:
