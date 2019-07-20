@@ -90,7 +90,7 @@ kconfig armv7hl:
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
-    EXTRA_DEPS: "pkgconfig(Qt5Core) pkgconfig(openssl)"
+    EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test)"
   script:
     - "dev/buildenv $ARCH python ci_build.py kconfig"
   only:
@@ -101,9 +101,31 @@ kconfig i486:
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
-    EXTRA_DEPS: "pkgconfig(Qt5Core) pkgconfig(openssl)"
+    EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test)"
   script:
     - "dev/buildenv $ARCH python ci_build.py kconfig"
   only:
     changes:
       - "kconfig/**/*"
+
+qca armv7hl:
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
+  variables:
+    ARCH: "armv7hl"
+    EXTRA_DEPS: "pkgconfig(Qt5Core) pkgconfig(openssl)"
+  script:
+    - "dev/buildenv $ARCH python ci_build.py qca"
+  only:
+    changes:
+      - "qca/**/*"
+
+qca i486:
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
+  variables:
+    ARCH: "i486"
+    EXTRA_DEPS: "pkgconfig(Qt5Core) pkgconfig(openssl)"
+  script:
+    - "dev/buildenv $ARCH python ci_build.py qca"
+  only:
+    changes:
+      - "qca/**/*"
