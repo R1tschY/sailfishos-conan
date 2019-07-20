@@ -62,5 +62,5 @@ class QcaConanFile(ConanFile):
         self.copy("*.qm", dst="share/locale", src="install/share", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = ["qca-qt5"]
+        self.cpp_info.libs = ["qca-qt5", "qca-ossl"]
 
