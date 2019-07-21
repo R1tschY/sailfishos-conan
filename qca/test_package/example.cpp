@@ -1,4 +1,7 @@
 #include <QtCrypto>
+#include <QtPlugin>
+
+Q_IMPORT_PLUGIN(opensslPlugin)
 
 int main()
 {
