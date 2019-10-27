@@ -7,7 +7,7 @@ from conans import ConanFile, tools, CMake
 
 
 class QcaConanFile(ConanFile):
-    name = "QCA"
+    name = "Qca-qt5"
     description = "Straightforward and cross-platform crypto API, using Qt datatypes and conventions."
     version = "2.2.1"
     license = "LGPLv2.1+"

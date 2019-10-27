@@ -5,11 +5,12 @@ import textwrap
 
 class KF5BuildBaseConanFile(ConanFile):
     name = "KF5BuildBase"
-    version = "0.1.2"
+    version = "0.2.0"
 
 
 def get_conanfile():
     class KF5ConanFileBase(ConanFile):
+        lib_name = ...
         license = "LGPLv2.1+"
         homepage = "https://kde.org/products/frameworks/"
         url = "https://github.com/R1tschY/sailfishos-conan"
@@ -22,7 +23,7 @@ def get_conanfile():
 
         @property
         def download_folder(self):
-            return "%s-%s" % (self.name.lower(), self.version)
+            return "%s-%s" % (self.lib_name.lower(), self.version)
 
         @property
         def short_version(self):
@@ -63,12 +64,12 @@ def get_conanfile():
             cmake.build(target="install")
 
         def package(self):
-            self.copy("*", dst="include", src="install/include/KF5/%s" % self.name)
+            self.copy("*", dst="include", src="install/include/KF5/%s" % self.lib_name)
             self.copy("*.a", dst="lib", src="install/lib", keep_path=False)
             self.copy("*.so", dst="lib", src="install/lib", keep_path=False)
             self.copy("*.qm", dst="share/locale", src="install/share", keep_path=False)
 
         def package_info(self):
-            self.cpp_info.libs = [self.name.replace("K", "KF5", 1)]
+            self.cpp_info.libs = [self.name]
 
     return KF5ConanFileBase
