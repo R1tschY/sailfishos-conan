@@ -4,19 +4,37 @@ from pathlib import Path
 import sys
 import textwrap
 
-MAGIC = "\n# -- JOBS --\n"
+ANY_JOBS = {
+    "extra-cmake-modules": [],
+}
+
 JOBS = {
-    "kcoreaddons": ["extra-cmake-modules", "pkgconfig(Qt5Test)"],
+    "kcoreaddons": ["pkgconfig(Qt5Test)"],
     "ki18n": [
-        "extra-cmake-modules",
         "pkgconfig(Qt5Test)",
         "pkgconfig(Qt5Script)",
         "gettext-devel",
     ],
     "libssh": ["pkgconfig(openssl)"],
-    "kconfig": ["extra-cmake-modules", "pkgconfig(Qt5Test)"],
+    "kconfig": ["pkgconfig(Qt5Test)"],
     "qca": ["git", "pkgconfig(Qt5Core)", "pkgconfig(openssl)"],
 }
+
+MAGIC = "\n# -- JOBS --\n"
+
+ANY_TEMPLATE = """
+{name}:
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
+  variables:
+    ARCH: "i486"
+    EXTRA_DEPS: "{requirements}"
+  script:
+    - "dev/buildenv $ARCH python ci_build.py {name}"
+  only:
+    changes:
+      - "{name}/**/*"
+"""
+
 TEMPLATE = """
 {name} armv7hl:
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
@@ -62,9 +80,17 @@ def main():
     content = content[: start + len(MAGIC)]
 
     template = textwrap.dedent(TEMPLATE.strip())
+    any_template = textwrap.dedent(ANY_TEMPLATE.strip())
+
     jobs = "\n\n".join(
         [
-            template.format(name=name, requirements=" ".join(f"{r}" for r in reqs))
+            any_template.format(name=name, requirements=" ".join(reqs))
+            for name, reqs in ANY_JOBS.items()
+        ]
+    )
+    jobs += "\n\n" + "\n\n".join(
+        [
+            template.format(name=name, requirements=" ".join(reqs))
             for name, reqs in JOBS.items()
         ]
     )

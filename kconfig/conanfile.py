@@ -9,6 +9,9 @@ class KF5ConfigConanFile(base.get_conanfile()):
     description = "Persistent platform-independent application settings."
     homepage = "https://api.kde.org/frameworks/kconfig/html/index.html"
     version = "5.36.0"
+
+    requires = "extra-cmake-modules/%s@r1tschy/stable" % version,
+
     options = {"shared": [True, False], "gui": [True, False]}
     default_options = {"shared": False, "gui": False}
 

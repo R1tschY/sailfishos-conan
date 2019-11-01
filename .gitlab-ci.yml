@@ -15,16 +15,27 @@ before_script:
   - sudo sed -i 's%sbox_user_home_dir%"/builds", exec_policy_name = "Target"},{dir = sbox_user_home_dir%' /usr/share/scratchbox2/modes/sdk-build/config.lua
 
   # Install python devel to compile python packages
-  - 'dev/installenv $ARCH zypper -qn in cmake openssl-devel python3-devel $EXTRA_DEPS'
+  - 'dev/installenv $ARCH zypper -qn in cmake python3-devel $EXTRA_DEPS'
   # Create conan venv
   - 'dev/buildenv $ARCH dev/commands/prepare-buildenv'
 
 # -- JOBS --
+extra-cmake-modules:
+  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
+  variables:
+    ARCH: "i486"
+    EXTRA_DEPS: ""
+  script:
+    - "dev/buildenv $ARCH python ci_build.py extra-cmake-modules"
+  only:
+    changes:
+      - "extra-cmake-modules/**/*"
+
 kcoreaddons armv7hl:
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
-    EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test)"
+    EXTRA_DEPS: "pkgconfig(Qt5Test)"
   script:
     - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
   only:
@@ -35,7 +46,7 @@ kcoreaddons i486:
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
-    EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test)"
+    EXTRA_DEPS: "pkgconfig(Qt5Test)"
   script:
     - "dev/buildenv $ARCH python ci_build.py kcoreaddons"
   only:
@@ -46,7 +57,7 @@ ki18n armv7hl:
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
-    EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test) pkgconfig(Qt5Script) gettext-devel"
+    EXTRA_DEPS: "pkgconfig(Qt5Test) pkgconfig(Qt5Script) gettext-devel"
   script:
     - "dev/buildenv $ARCH python ci_build.py ki18n"
   only:
@@ -57,7 +68,7 @@ ki18n i486:
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
-    EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test) pkgconfig(Qt5Script) gettext-devel"
+    EXTRA_DEPS: "pkgconfig(Qt5Test) pkgconfig(Qt5Script) gettext-devel"
   script:
     - "dev/buildenv $ARCH python ci_build.py ki18n"
   only:
@@ -90,7 +101,7 @@ kconfig armv7hl:
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
-    EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test)"
+    EXTRA_DEPS: "pkgconfig(Qt5Test)"
   script:
     - "dev/buildenv $ARCH python ci_build.py kconfig"
   only:
@@ -101,7 +112,7 @@ kconfig i486:
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
-    EXTRA_DEPS: "extra-cmake-modules pkgconfig(Qt5Test)"
+    EXTRA_DEPS: "pkgconfig(Qt5Test)"
   script:
     - "dev/buildenv $ARCH python ci_build.py kconfig"
   only:
