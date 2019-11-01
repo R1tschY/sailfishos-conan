@@ -21,7 +21,7 @@ before_script:
   # Create conan venv
   - 'dev/buildenv $ARCH dev/commands/prepare-buildenv'
 
-stage:
+stages:
   - "no deps"
   - "KF5 Tier 1"
 
