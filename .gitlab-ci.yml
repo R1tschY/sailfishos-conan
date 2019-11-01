@@ -22,12 +22,12 @@ before_script:
   - 'dev/buildenv $ARCH dev/commands/prepare-buildenv'
 
 stages:
-  - "no deps"
-  - "KF5 Tier 1"
+  - "Build Deps"
+  - "Tier 1"
 
 # -- JOBS --
 extra-cmake-modules i486:
-  stage: "no deps"
+  stage: "Build Deps"
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
@@ -39,7 +39,7 @@ extra-cmake-modules i486:
       - "extra-cmake-modules/**/*"
 
 kcoreaddons armv7hl:
-  stage: "KF5 Tier 1"
+  stage: "Tier 1"
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
@@ -51,7 +51,7 @@ kcoreaddons armv7hl:
       - "kcoreaddons/**/*"
 
 kcoreaddons i486:
-  stage: "KF5 Tier 1"
+  stage: "Tier 1"
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
@@ -63,7 +63,7 @@ kcoreaddons i486:
       - "kcoreaddons/**/*"
 
 ki18n armv7hl:
-  stage: "KF5 Tier 1"
+  stage: "Tier 1"
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
@@ -75,7 +75,7 @@ ki18n armv7hl:
       - "ki18n/**/*"
 
 ki18n i486:
-  stage: "KF5 Tier 1"
+  stage: "Tier 1"
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
@@ -87,7 +87,7 @@ ki18n i486:
       - "ki18n/**/*"
 
 kconfig armv7hl:
-  stage: "KF5 Tier 1"
+  stage: "Tier 1"
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
@@ -99,7 +99,7 @@ kconfig armv7hl:
       - "kconfig/**/*"
 
 kconfig i486:
-  stage: "KF5 Tier 1"
+  stage: "Tier 1"
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
@@ -111,7 +111,7 @@ kconfig i486:
       - "kconfig/**/*"
 
 libssh armv7hl:
-  stage: "no deps"
+  stage: "Tier 1"
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
@@ -123,7 +123,7 @@ libssh armv7hl:
       - "libssh/**/*"
 
 libssh i486:
-  stage: "no deps"
+  stage: "Tier 1"
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"
@@ -135,7 +135,7 @@ libssh i486:
       - "libssh/**/*"
 
 qca armv7hl:
-  stage: "no deps"
+  stage: "Tier 1"
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "armv7hl"
@@ -147,7 +147,7 @@ qca armv7hl:
       - "qca/**/*"
 
 qca i486:
-  stage: "no deps"
+  stage: "Tier 1"
   image: "r1tschy/sailfishos-platform-sdk:$ARCH"
   variables:
     ARCH: "i486"

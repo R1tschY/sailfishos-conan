@@ -7,14 +7,13 @@ import textwrap
 
 JOBS = {
     "extra-cmake-modules": {
+      "stage": "Build Deps",
       "archs": ["i486"]
     },
     "kcoreaddons": {
-      "stage": "KF5 Tier 1",
       "deps": ["pkgconfig(Qt5Test)"]
     },
     "ki18n": {
-      "stage": "KF5 Tier 1",
       "deps": [
         "pkgconfig(Qt5Test)",
         "pkgconfig(Qt5Script)",
@@ -22,7 +21,6 @@ JOBS = {
       ]
     },
     "kconfig": {
-      "stage": "KF5 Tier 1",
       "deps": ["pkgconfig(Qt5Test)"]
     },
     "libssh": {
@@ -34,6 +32,7 @@ JOBS = {
 }
 
 DEFAULT_ARCHS = ["armv7hl", "i486"]
+DEFAULT_STAGE = "Tier 1"
 
 MAGIC = "\n# -- JOBS --\n"
 
@@ -74,7 +73,7 @@ def main():
               name=name, 
               requirements=" ".join(infos.get("deps", ())),
               arch=arch,
-              stage=infos.get("stage", "no deps"))
+              stage=infos.get("stage", DEFAULT_STAGE))
             for name, infos in JOBS.items()
             for arch in infos.get("archs", DEFAULT_ARCHS)
         ]
