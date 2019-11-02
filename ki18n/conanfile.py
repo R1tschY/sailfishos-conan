@@ -1,6 +1,6 @@
 from conans import python_requires
 
-base = python_requires("KF5BuildBase/0.2.0@r1tschy/stable")
+base = python_requires("KF5BuildBase/0.2.1@r1tschy/stable")
 
 
 class KF5I18nConanFile(base.get_conanfile()):
