@@ -21,6 +21,8 @@ def get_conanfile():
         options = {"shared": [True, False]}
         default_options = "shared=False"
 
+        sub_modules = []
+
         @property
         def download_folder(self):
             return "%s-%s" % (self.lib_name.lower(), self.version)
@@ -70,7 +72,14 @@ def get_conanfile():
             self.copy("*", dst="share", src="install/share")
 
         def package_info(self):
-            self.cpp_info.libs = [self.name]
-            self.cpp_info.includedirs = ["include/KF5/%s" % self.lib_name]
+            if self.sub_modules:
+                self.cpp_info.libs = []
+                self.cpp_info.includedirs = []
+                for module in self.sub_modules:
+                    self.cpp_info.libs.append(self.name + module)
+                    self.cpp_info.includedirs.append("include/KF5/%s%s" % (self.lib_name, module))
+            else:
+                self.cpp_info.libs = [self.name]
+                self.cpp_info.includedirs = ["include/KF5/%s" % self.lib_name]
 
     return KF5ConanFileBase
