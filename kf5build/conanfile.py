@@ -68,7 +68,8 @@ def get_conanfile():
             self.copy("*.a", dst="lib", src="install/lib", keep_path=False)
             self.copy("*.so", dst="lib", src="install/lib", keep_path=False)
             self.copy("*.qm", dst="share/locale", src="install/share", keep_path=False)
-            self.copy("*.cmake", dst="share", src="install/share", keep_path=False)
+            self.copy("*.cmake", dst="share", src="install/share")
+            self.copy("*.cmake", dst="lib", src="install/lib")
 
         def package_info(self):
             self.cpp_info.libs = [self.name]
