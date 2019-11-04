@@ -64,14 +64,13 @@ def get_conanfile():
             cmake.build(target="install")
 
         def package(self):
-            self.copy("*", dst="include", src="install/include/KF5/%s" % self.lib_name)
-            self.copy("*.a", dst="lib", src="install/lib", keep_path=False)
-            self.copy("*.so", dst="lib", src="install/lib", keep_path=False)
-            self.copy("*.qm", dst="share/locale", src="install/share", keep_path=False)
-            self.copy("*.cmake", dst="share", src="install/share")
-            self.copy("*.cmake", dst="lib", src="install/lib")
+            self.copy("*", dst="include", src="install/include")
+            self.copy("*", dst="lib", src="install/lib")
+            self.copy("*", dst="bin", src="install/bin")
+            self.copy("*", dst="share", src="install/share")
 
         def package_info(self):
             self.cpp_info.libs = [self.name]
+            self.cpp_info.includedirs = ["include/KF5/%s" % self.lib_name]
 
     return KF5ConanFileBase
