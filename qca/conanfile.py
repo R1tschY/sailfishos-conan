@@ -56,13 +56,13 @@ class QcaConanFile(ConanFile):
         cmake.build(target="install")
 
     def package(self):
-        self.copy("*", dst="include", src="install/include/Qca-qt5/QtCrypto")
+        self.copy("*", dst="include", src="install/include")
         self.copy("*.a", dst="lib", src="install/lib", keep_path=False)
         self.copy("*.so", dst="lib", src="install/lib", keep_path=False)
         self.copy("*.qm", dst="share/locale", src="install/share", keep_path=False)
-        self.copy("*.cmake", dst="lib", src="install/lib")
 
     def package_info(self):
+        self.cpp_info.includedirs = ["include/Qca-qt5/QtCrypto"]
         self.cpp_info.libs = [
             "qca-ossl", "ssl", "crypto", "qca-qt5"
         ]
