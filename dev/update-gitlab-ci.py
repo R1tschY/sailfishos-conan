@@ -39,9 +39,10 @@ MAGIC = "\n# -- JOBS --\n"
 TEMPLATE = """
 {name} {arch}:
   stage: "{stage}"
-  image: "r1tschy/sailfishos-platform-sdk:$ARCH"
+  image: "r1tschy/sailfishos-platform-sdk:$SFOS_VERSION-$ARCH"
   variables:
     ARCH: "{arch}"
+    SFOS_VERSION: "3.1.0.12"
     EXTRA_DEPS: "{requirements}"
   script:
     - "dev/buildenv $ARCH python ci_build.py {name}"
