@@ -55,14 +55,18 @@ def main():
     )
 
     settings = {"arch": conan_arch, "arch_build": conan_arch, "build_type": "Release"}
-    builder.add(
-        settings=settings,
-        options={f"{name}:shared": False}
-    )
-    builder.add(
-        settings=settings,
-        options={f"{name}:shared": True}
-    )
+    if name not in ("extra-cmake-modules", "libssh"):
+        builder.add(
+            settings=settings,
+            options={f"{name}:shared": False}
+        )
+        builder.add(
+            settings=settings,
+            options={f"{name}:shared": True}
+        )
+    else:
+        builder.add(settings=settings)
+
     builder.run()
 
 
