@@ -59,6 +59,7 @@ def get_conanfile():
                 {
                     "CMAKE_INSTALL_PREFIX": os.path.join(self.build_folder, "install"),
                     "BUILD_QCH": "OFF",
+                    "BUILD_TESTING": "OFF"
                 }
             )
             cmake.configure(source_folder=self.download_folder)
