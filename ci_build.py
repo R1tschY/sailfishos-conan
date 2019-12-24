@@ -31,7 +31,7 @@ def get_reference(file_path: str):
     if name is None or version is None:
         raise RuntimeError(f"name or version missing in conan file {file_path}")
 
-    return f"{name}/{version}"
+    return name, version
 
 
 def main():
@@ -46,21 +46,22 @@ def main():
 
     os.chdir(args.path)
 
+    name, version = get_reference("conanfile.py")
     builder = ConanMultiPackager(
         remotes=[
             ("https://api.bintray.com/conan/r1tschy/sailfishos", True, "sailfishos")
         ],
-        reference=get_reference("conanfile.py"),
+        reference=f"{name}/{version}",
     )
 
     settings = {"arch": conan_arch, "arch_build": conan_arch, "build_type": "Release"}
     builder.add(
         settings=settings,
-        options={"shared": False}
+        options={f"{name}:shared": False}
     )
     builder.add(
         settings=settings,
-        options={"shared": True}
+        options={f"{name}:shared": True}
     )
     builder.run()
 
