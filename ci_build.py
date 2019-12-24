@@ -52,8 +52,15 @@ def main():
         ],
         reference=get_reference("conanfile.py"),
     )
+
+    settings = {"arch": conan_arch, "arch_build": conan_arch, "build_type": "Release"}
     builder.add(
-        settings={"arch": conan_arch, "arch_build": conan_arch, "build_type": "Release"}
+        settings=settings,
+        options={"shared": False}
+    )
+    builder.add(
+        settings=settings,
+        options={"shared": True}
     )
     builder.run()
 
