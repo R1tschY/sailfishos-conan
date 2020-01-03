@@ -55,7 +55,7 @@ def main():
     )
 
     settings = {"arch": conan_arch, "arch_build": conan_arch, "build_type": "RelWithDebInfo"}
-    if name not in ("extra-cmake-modules", "libssh", "Qca-qt5"):
+    if name not in ("extra-cmake-modules", "libssh"):
         builder.add(
             settings=settings,
             options={f"{name}:shared": False}

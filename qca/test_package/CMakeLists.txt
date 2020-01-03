@@ -9,6 +9,10 @@ conan_basic_setup(TARGETS)
 
 find_package(Qt5Core)
 
+if (QCA_SHARED) 
+  add_definitions(-DQCA_SHARED)
+endif()
+
 add_executable(example example.cpp)
 target_link_libraries(example Qt5::Core CONAN_PKG::Qca-qt5)
 
