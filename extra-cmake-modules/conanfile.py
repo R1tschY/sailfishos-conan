@@ -4,7 +4,7 @@ import os
 
 class ExtraCmakeModulesConanFile(ConanFile):
     name = "extra-cmake-modules"
-    version = "5.36.0"
+    version = "5.68.0"
 
     license = "LGPLv2.1+"
     homepage = "http://api.kde.org/frameworks-api/frameworks5-apidocs/extra-cmake-modules/html/index.html"
