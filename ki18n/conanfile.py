@@ -10,4 +10,4 @@ class KF5I18nConanFile(base.get_conanfile()):
     homepage = "https://api.kde.org/frameworks/ki18n/html/index.html"
     version = "5.36.0"
 
-    requires = "extra-cmake-modules/%s@r1tschy/stable" % version,
+    requires = "extra-cmake-modules/5.68.0@r1tschy/stable",

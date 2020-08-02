@@ -9,4 +9,4 @@ class KCoreAddonsConanFile(base.get_conanfile()):
     description = "Addons to QtCore"
     version = "5.36.0"
 
-    requires = "extra-cmake-modules/%s@r1tschy/stable" % version,
+    requires = "extra-cmake-modules/5.68.0@r1tschy/stable",
