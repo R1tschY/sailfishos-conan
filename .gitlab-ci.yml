@@ -18,7 +18,7 @@ before_script:
   - sudo sed -i 's%sbox_user_home_dir%"/builds", exec_policy_name = "Target"},{dir = sbox_user_home_dir%' /usr/share/scratchbox2/modes/sdk-build/config.lua
 
   # Install python devel to compile python packages
-  - 'dev/installenv $ARCH zypper -qn in cmake python3-devel $EXTRA_DEPS'
+  - 'dev/installenv $ARCH zypper -qn in cmake python3-devel python3-pip $EXTRA_DEPS'
   # Create conan venv
   - 'dev/buildenv $ARCH dev/commands/prepare-buildenv'
 

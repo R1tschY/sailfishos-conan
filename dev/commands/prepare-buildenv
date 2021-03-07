@@ -7,7 +7,7 @@ VENV=`readlink -m "$SCRIPT_DIR/../../.venv-$ARCH"`
 # create virtualenv and install conan
 if [ ! -d "$VENV" ] ; then
   echo "Install virtualenv ..."
-  pip3 install --no-warn-script-location --user --upgrade virtualenv
+  python3 -m pip install --no-warn-script-location --user --upgrade virtualenv
 
   echo "Create conan venv @ $VENV ..."
   ~/.local/bin/virtualenv --python=python3 "$VENV"
