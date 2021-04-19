@@ -9,7 +9,7 @@ variables:
   CONAN_LOGIN_USERNAME: r1tschy
   CONAN_USERNAME: r1tschy
   CONAN_UPLOAD: https://api.bintray.com/conan/r1tschy/sailfishos@1@sailfishos
-  SFOS_VERSION: 4.0.1.48
+  SFOS_VERSION: 3.4.0.24
 
 before_script:
   # route /builds to sb2
